@@ -1,0 +1,606 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>M'Cheyne Bibelleseplan</title>
+  <meta name="author" content="Philipp Keller">
+  <link href="/favicon.png" rel="shortcut icon">
+  <link rel="stylesheet" href="/css/highlightjs/solarized_dark.css">
+  <link rel="alternate" href="/atom.xml" title="Philipp Keller" type="application/atom+xml">
+  <link href="/css/site.css" rel="stylesheet">
+  <script type="text/javascript" src="/js/jquery.min.js"></script>
+  <script type="text/javascript" src="/js/jquery.caption.min.js"></script>
+  <link href="/css/captionjs.min.css" rel="stylesheet"/>
+  <script type="text/javascript" src="/js/ewal.js"></script>
+  <script type="text/javascript" src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script type="text/javascript">
+
+var book_translate = {
+	Ezra: 'Esra',
+	Acts: 'Apg',
+	Rom: 'Röm',
+	Job: 'Hiob',
+	Cor: 'Kor',
+	Prov: 'Spr',
+	Jn: 'Joh',
+	Ecc: 'Pred',
+	Song: 'Hoh',
+	Isa: 'Jes',
+	James: 'Jak',
+	Jude: 'Jud',
+	Rev: 'Off',
+	Judg: 'Richt',
+	Eze: 'Hes',
+	Kings: 'Kön',
+	Mic: 'Micha',
+	Zech: 'Sach',
+}
+
+var data = [
+['Gen 1', 'Mt 1', 'Ezra 1', 'Acts 1'],
+['Gen 2', 'Mt 2', 'Ezra 2', 'Acts 2'],
+['Gen 3', 'Mt 3', 'Ezra 3', 'Acts 3'],
+['Gen 4', 'Mt 4', 'Ezra 4', 'Acts 4'],
+['Gen 5', 'Mt 5', 'Ezra 5', 'Acts 5'],
+['Gen 6', 'Mt 6', 'Ezra 6', 'Acts 6'],
+['Gen 7', 'Mt 7', 'Ezra 7', 'Acts 7'],
+['Gen 8', 'Mt 8', 'Ezra 8', 'Acts 8'],
+['Gen 9-10', 'Mt 9', 'Ezra 9', 'Acts 9'],
+['Gen 11', 'Mt 10', 'Ezra 10', 'Acts 10'],
+['Gen 12', 'Mt 11', 'Neh 1', 'Acts 11'],
+['Gen 13', 'Mt 12', 'Neh 2', 'Acts 12'],
+['Gen 14', 'Mt 13', 'Neh 3', 'Acts 13'],
+['Gen 15', 'Mt 14', 'Neh 4', 'Acts 14'],
+['Gen 16', 'Mt 15', 'Neh 5', 'Acts 15'],
+['Gen 17', 'Mt 16', 'Neh 6', 'Acts 16'],
+['Gen 18', 'Mt 17', 'Neh 7', 'Acts 17'],
+['Gen 19', 'Mt 18', 'Neh 8', 'Acts 18'],
+['Gen 20', 'Mt 19', 'Neh 9', 'Acts 19'],
+['Gen 21', 'Mt 20', 'Neh 10', 'Acts 20'],
+['Gen 22', 'Mt 21', 'Neh 11', 'Acts 21'],
+['Gen 23', 'Mt 22', 'Neh 12', 'Acts 22'],
+['Gen 24', 'Mt 23', 'Neh 13', 'Acts 23'],
+['Gen 25', 'Mt 24', 'Esth 1', 'Acts 24'],
+['Gen 26', 'Mt 25', 'Esth 2', 'Acts 25'],
+['Gen 27', 'Mt 26', 'Esth 3', 'Acts 26'],
+['Gen 28', 'Mt 27', 'Esth 4', 'Acts 27'],
+['Gen 29', 'Mt 28', 'Esth 5', 'Acts 28'],
+['Gen 30', 'Mk 1', 'Esth 6', 'Rom 1'],
+['Gen 31', 'Mk 2', 'Esth 7', 'Rom 2'],
+['Gen 32', 'Mk 3', 'Esth 8', 'Rom 3'],
+['Gen 33', 'Mk 4', 'Esth 9-10', 'Rom 4'],
+['Gen 34', 'Mk 5', 'Job 1', 'Rom 5'],
+['Gen 35-36', 'Mk 6', 'Job 2', 'Rom 6'],
+['Gen 37', 'Mk 7', 'Job 3', 'Rom 7'],
+['Gen 38', 'Mk 8', 'Job 4', 'Rom 8'],
+['Gen 39', 'Mk 9', 'Job 5', 'Rom 9'],
+['Gen 40', 'Mk 10', 'Job 6', 'Rom 10'],
+['Gen 41', 'Mk 11', 'Job 7', 'Rom 11'],
+['Gen 42', 'Mk 12', 'Job 8', 'Rom 12'],
+['Gen 43', 'Mk 13', 'Job 9', 'Rom 13'],
+['Gen 44', 'Mk 14', 'Job 10', 'Rom 14'],
+['Gen 45', 'Mk 15', 'Job 11', 'Rom 15'],
+['Gen 46', 'Mk 16', 'Job 12', 'Rom 16'],
+['Gen 47', 'Lk 1:1-38', 'Job 13', '1 Cor 1'],
+['Gen 48', 'Lk 1:39ff', 'Job 14', '1 Cor 2'],
+['Gen 49', 'Lk 2', 'Job 15', '1 Cor 3'],
+['Gen 50', 'Lk 3', 'Job 16-17', '1 Cor 4'],
+['Exo 1', 'Lk 4', 'Job 18', '1 Cor 5'],
+['Exo 2', 'Lk 5', 'Job 19', '1 Cor 6'],
+['Exo 3', 'Lk 6', 'Job 20', '1 Cor 7'],
+['Exo 4', 'Lk 7', 'Job 21', '1 Cor 8'],
+['Exo 5', 'Lk 8', 'Job 22', '1 Cor 9'],
+['Exo 6', 'Lk 9', 'Job 23', '1 Cor 10'],
+['Exo 7', 'Lk 10', 'Job 24', '1 Cor 11'],
+['Exo 8', 'Lk 11', 'Job 25-26', '1 Cor 12'],
+['Exo 9', 'Lk 12', 'Job 27', '1 Cor 13'],
+['Exo 10', 'Lk 13', 'Job 28', '1 Cor 14'],
+['Exo 11-12:21', 'Lk 14', 'Job 29', '1 Cor 15'],
+['Exo 12:22ff', 'Lk 15', 'Job 30', '1 Cor 16'],
+['Exo 13', 'Lk 16', 'Job 31', '2 Cor 1'],
+['Exo 14', 'Lk 17', 'Job 32', '2 Cor 2'],
+['Exo 15', 'Lk 18', 'Job 33', '2 Cor 3'],
+['Exo 16', 'Lk 19', 'Job 34', '2 Cor 4'],
+['Exo 17', 'Lk 20', 'Job 35', '2 Cor 5'],
+['Exo 18', 'Lk 21', 'Job 36', '2 Cor 6'],
+['Exo 19', 'Lk 22', 'Job 37', '2 Cor 7'],
+['Exo 20', 'Lk 23', 'Job 38', '2 Cor 8'],
+['Exo 21', 'Lk 24', 'Job 39', '2 Cor 9'],
+['Exo 22', 'Jn 1', 'Job 40', '2 Cor 10'],
+['Exo 23', 'Jn 2', 'Job 41', '2 Cor 11'],
+['Exo 24', 'Jn 3', 'Job 42', '2 Cor 12'],
+['Exo 25', 'Jn 4', 'Prov 1', '2 Cor 13'],
+['Exo 26', 'Jn 5', 'Prov 2', 'Gal 1'],
+['Exo 27', 'Jn 6', 'Prov 3', 'Gal 2'],
+['Exo 28', 'Jn 7', 'Prov 4', 'Gal 3'],
+['Exo 29', 'Jn 8', 'Prov 5', 'Gal 4'],
+['Exo 30', 'Jn 9', 'Prov 6', 'Gal 5'],
+['Exo 31', 'Jn 10', 'Prov 7', 'Gal 6'],
+['Exo 32', 'Jn 11', 'Prov 8', 'Eph 1'],
+['Exo 33', 'Jn 12', 'Prov 9', 'Eph 2'],
+['Exo 34', 'Jn 13', 'Prov 10', 'Eph 3'],
+['Exo 35', 'Jn 14', 'Prov 11', 'Eph 4'],
+['Exo 36', 'Jn 15', 'Prov 12', 'Eph 5'],
+['Exo 37', 'Jn 16', 'Prov 13', 'Eph 6'],
+['Exo 38', 'Jn 17', 'Prov 14', 'Phil 1'],
+['Exo 39', 'Jn 18', 'Prov 15', 'Phil 2'],
+['Exo 40', 'Jn 19', 'Prov 16', 'Phil 3'],
+['Lev 1', 'Jn 20', 'Prov 17', 'Phil 4'],
+['Lev 2-3', 'Jn 21', 'Prov 18', 'Col 1'],
+['Lev 4', 'Ps 1-2', 'Prov 19', 'Col 2'],
+['Lev 5', 'Ps 3-4', 'Prov 20', 'Col 3'],
+['Lev 6', 'Ps 5-6', 'Prov 21', 'Col 4'],
+['Lev 7', 'Ps 7-8', 'Prov 22', '1 Thess 1'],
+['Lev 8', 'Ps 9', 'Prov 23', '1 Thess 2'],
+['Lev 9', 'Ps 10', 'Prov 24', '1 Thess 3'],
+['Lev 10', 'Ps 11-12', 'Prov 25', '1 Thess 4'],
+['Lev 11-12', 'Ps 13-14', 'Prov 26', '1 Thess 5'],
+['Lev 13', 'Ps 15-16', 'Prov 27', '2 Thess 1'],
+['Lev 14', 'Ps 17', 'Prov 28', '2 Thess 2'],
+['Lev 15', 'Ps 18', 'Prov 29', '2 Thess 3'],
+['Lev 16', 'Ps 19', 'Prov 30', '1 Tim 1'],
+['Lev 17', 'Ps 20-21', 'Prov 31', '1 Tim 2'],
+['Lev 18', 'Ps 22', 'Ecc 1', '1 Tim 3'],
+['Lev 19', 'Ps 23-24', 'Ecc 2', '1 Tim 4'],
+['Lev 20', 'Ps 25', 'Ecc 3', '1 Tim 5'],
+['Lev 21', 'Ps 26-27', 'Ecc 4', '1 Tim 6'],
+['Lev 22', 'Ps 28-29', 'Ecc 5', '2 Tim 1'],
+['Lev 23', 'Ps 30', 'Ecc 6', '2 Tim 2'],
+['Lev 24', 'Ps 31', 'Ecc 7', '2 Tim 3'],
+['Lev 25', 'Ps 32', 'Ecc 8', '2 Tim 4'],
+['Lev 26', 'Ps 33', 'Ecc 9', 'Titus 1'],
+['Lev 27', 'Ps 34', 'Ecc 10', 'Titus 2'],
+['Num 1', 'Ps 35', 'Ecc 11', 'Titus 3'],
+['Num 2', 'Ps 36', 'Ecc 12', 'Phm 1'],
+['Num 3', 'Ps 37', 'Song 1', 'Heb 1'],
+['Num 4', 'Ps 38', 'Song 2', 'Heb 2'],
+['Num 5', 'Ps 39', 'Song 3', 'Heb 3'],
+['Num 6', 'Ps 40-41', 'Song 4', 'Heb 4'],
+['Num 7', 'Ps 42-43', 'Song 5', 'Heb 5'],
+['Num 8', 'Ps 44', 'Song 6', 'Heb 6'],
+['Num 9', 'Ps 45', 'Song 7', 'Heb 7'],
+['Num 10', 'Ps 46-47', 'Song 8', 'Heb 8'],
+['Num 11', 'Ps 48', 'Isa 1', 'Heb 9'],
+['Num 12-13', 'Ps 49', 'Isa 2', 'Heb 10'],
+['Num 14', 'Ps 50', 'Isa 3-4', 'Heb 11'],
+['Num 15', 'Ps 51', 'Isa 5', 'Heb 12'],
+['Num 16', 'Ps 52-54', 'Isa 6', 'Heb 13'],
+['Num 17-18', 'Ps 55', 'Isa 7', 'James 1'],
+['Num 19', 'Ps 56-57', 'Isa 8-9:7', 'James 2'],
+['Num 20', 'Ps 58-59', 'Isa 9:8-10:4', 'James 3'],
+['Num 21', 'Ps 60-61', 'Isa 10:5ff', 'James 4'],
+['Num 22', 'Ps 62-63', 'Isa 11-12', 'James 5'],
+['Num 23', 'Ps 64-65', 'Isa 13', '1 Pet 1'],
+['Num 24', 'Ps 66-67', 'Isa 14', '1 Pet 2'],
+['Num 25', 'Ps 68', 'Isa 15', '1 Pet 3'],
+['Num 26', 'Ps 69', 'Isa 16', '1 Pet 4'],
+['Num 27', 'Ps 70-71', 'Isa 17-18', '1 Pet 5'],
+['Num 28', 'Ps 72', 'Isa 19-20', '2 Pet 1'],
+['Num 29', 'Ps 73', 'Isa 21', '2 Pet 2'],
+['Num 30', 'Ps 74', 'Isa 22', '2 Pet 3'],
+['Num 31', 'Ps 75-76', 'Isa 23', '1 Jn 1'],
+['Num 32', 'Ps 77', 'Isa 24', '1 Jn 2'],
+['Num 33', 'Ps 78:1-37', 'Isa 25', '1 Jn 3'],
+['Num 34', 'Ps 78:38ff', 'Isa 26', '1 Jn 4'],
+['Num 35', 'Ps 79', 'Isa 27', '1 Jn 5'],
+['Num 36', 'Ps 80', 'Isa 28', '2 Jn 1'],
+['Deut 1', 'Ps 81-82', 'Isa 29', '3 Jn 1'],
+['Deut 2', 'Ps 83-84', 'Isa 30', 'Jude 1'],
+['Deut 3', 'Ps 85', 'Isa 31', 'Rev 1'],
+['Deut 4', 'Ps 86-87', 'Isa 32', 'Rev 2'],
+['Deut 5', 'Ps 88', 'Isa 33', 'Rev 3'],
+['Deut 6', 'Ps 89', 'Isa 34', 'Rev 4'],
+['Deut 7', 'Ps 90', 'Isa 35', 'Rev 5'],
+['Deut 8', 'Ps 91', 'Isa 36', 'Rev 6'],
+['Deut 9', 'Ps 92-93', 'Isa 37', 'Rev 7'],
+['Deut 10', 'Ps 94', 'Isa 38', 'Rev 8'],
+['Deut 11', 'Ps 95-96', 'Isa 39', 'Rev 9'],
+['Deut 12', 'Ps 97-98', 'Isa 40', 'Rev 10'],
+['Deut 13-14', 'Ps 99-101', 'Isa 41', 'Rev 11'],
+['Deut 15', 'Ps 102', 'Isa 42', 'Rev 12'],
+['Deut 16', 'Ps 103', 'Isa 43', 'Rev 13'],
+['Deut 17', 'Ps 104', 'Isa 44', 'Rev 14'],
+['Deut 18', 'Ps 105', 'Isa 45', 'Rev 15'],
+['Deut 19', 'Ps 106', 'Isa 46', 'Rev 16'],
+['Deut 20', 'Ps 107', 'Isa 47', 'Rev 17'],
+['Deut 21', 'Ps 108-109', 'Isa 48', 'Rev 18'],
+['Deut 22', 'Ps 110-111', 'Isa 49', 'Rev 19'],
+['Deut 23', 'Ps 112-113', 'Isa 50', 'Rev 20'],
+['Deut 24', 'Ps 114-115', 'Isa 51', 'Rev 21'],
+['Deut 25', 'Ps 116', 'Isa 52', 'Rev 22'],
+['Deut 26', 'Ps 117-118', 'Isa 53', 'Mt 1'],
+['Deut 27-28:19', 'Ps 119:1-24', 'Isa 54', 'Mt 2'],
+['Deut 28:20ff', 'Ps 119:25-48', 'Isa 55', 'Mt 3'],
+['Deut 29', 'Ps 119:49-72', 'Isa 56', 'Mt 4'],
+['Deut 30', 'Ps 119:73-96', 'Isa 57', 'Mt 5'],
+['Deut 31', 'Ps 119:97-120', 'Isa 58', 'Mt 6'],
+['Deut 32', 'Ps 119:121-144', 'Isa 59', 'Mt 7'],
+['Deut 33-34', 'Ps 119:145-176', 'Isa 60', 'Mt 8'],
+['Jos 1', 'Ps 120-122', 'Isa 61', 'Mt 9'],
+['Jos 2', 'Ps 123-125', 'Isa 62', 'Mt 10'],
+['Jos 3', 'Ps 126-128', 'Isa 63', 'Mt 11'],
+['Jos 4', 'Ps 129-131', 'Isa 64', 'Mt 12'],
+['Jos 5-6:5', 'Ps 132-134', 'Isa 65', 'Mt 13'],
+['Jos 6:6ff', 'Ps 135-136', 'Isa 66', 'Mt 14'],
+['Jos 7', 'Ps 137-138', 'Jer 1', 'Mt 15'],
+['Jos 8', 'Ps 139', 'Jer 2', 'Mt 16'],
+['Jos 9', 'Ps 140-141', 'Jer 3', 'Mt 17'],
+['Jos 10', 'Ps 142-143', 'Jer 4', 'Mt 18'],
+['Jos 11', 'Ps 144', 'Jer 5', 'Mt 19'],
+['Jos 12-13', 'Ps 145', 'Jer 6', 'Mt 20'],
+['Jos 14-15', 'Ps 146-147', 'Jer 7', 'Mt 21'],
+['Jos 16-17', 'Ps 148', 'Jer 8', 'Mt 22'],
+['Jos 18-19', 'Ps 149–150', 'Jer 9', 'Mt 23'],
+['Jos 20-21', 'Acts 1', 'Jer 10', 'Mt 24'],
+['Jos 22', 'Acts 2', 'Jer 11', 'Mt 25'],
+['Jos 23', 'Acts 3', 'Jer 12', 'Mt 26'],
+['Jos 24', 'Acts 4', 'Jer 13', 'Mt 27'],
+['Judg 1', 'Acts 5', 'Jer 14', 'Mt 28'],
+['Judg 2', 'Acts 6', 'Jer 15', 'Mk 1'],
+['Judg 3', 'Acts 7', 'Jer 16', 'Mk 2'],
+['Judg 4', 'Acts 8', 'Jer 17', 'Mk 3'],
+['Judg 5', 'Acts 9', 'Jer 18', 'Mk 4'],
+['Judg 6', 'Acts 10', 'Jer 19', 'Mk 5'],
+['Judg 7', 'Acts 11', 'Jer 20', 'Mk 6'],
+['Judg 8', 'Acts 12', 'Jer 21', 'Mk 7'],
+['Judg 9', 'Acts 13', 'Jer 22', 'Mk 8'],
+['Judg 10-11:11', 'Acts 14', 'Jer 23', 'Mk 9'],
+['Judg 11:12ff', 'Acts 15', 'Jer 24', 'Mk 10'],
+['Judg 12', 'Acts 16', 'Jer 25', 'Mk 11'],
+['Judg 13', 'Acts 17', 'Jer 26', 'Mk 12'],
+['Judg 14', 'Acts 18', 'Jer 27', 'Mk 13'],
+['Judg 15', 'Acts 19', 'Jer 28', 'Mk 14'],
+['Judg 16', 'Acts 20', 'Jer 29', 'Mk 15'],
+['Judg 17', 'Acts 21', 'Jer 30-31', 'Mk 16'],
+['Judg 18', 'Acts 22', 'Jer 32', 'Ps 1-2'],
+['Judg 19', 'Acts 23', 'Jer 33', 'Ps 3-4'],
+['Judg 20', 'Acts 24', 'Jer 34', 'Ps 5-6'],
+['Judg 21', 'Acts 25', 'Jer 35', 'Ps 7-8'],
+['Ruth 1', 'Acts 26', 'Jer 36 & 45', 'Ps 9'],
+['Ruth 2', 'Acts 27', 'Jer 37', 'Ps 10'],
+['Ruth 3-4', 'Acts 28', 'Jer 38', 'Ps 11-12'],
+['1 Sam 1', 'Rom 1', 'Jer 39', 'Ps 13-14'],
+['1 Sam 2', 'Rom 2', 'Jer 40', 'Ps 15-16'],
+['1 Sam 3', 'Rom 3', 'Jer 41', 'Ps 17'],
+['1 Sam 4', 'Rom 4', 'Jer 42', 'Ps 18'],
+['1 Sam 5-6', 'Rom 5', 'Jer 43', 'Ps 19'],
+['1 Sam 7-8', 'Rom 6', 'Jer 44', 'Ps 20-21'],
+['1 Sam 9', 'Rom 7', 'Jer 46', 'Ps 22'],
+['1 Sam 10', 'Rom 8', 'Jer 47', 'Ps 23-24'],
+['1 Sam 11', 'Rom 9', 'Jer 48', 'Ps 25'],
+['1 Sam 12', 'Rom 10', 'Jer 49', 'Ps 26-27'],
+['1 Sam 13', 'Rom 11', 'Jer 50', 'Ps 28-29'],
+['1 Sam 14', 'Rom 12', 'Jer 51', 'Ps 30'],
+['1 Sam 15', 'Rom 13', 'Jer 52', 'Ps 31'],
+['1 Sam 16', 'Rom 14', 'Lam 1', 'Ps 32'],
+['1 Sam 17', 'Rom 15', 'Lam 2', 'Ps 33'],
+['1 Sam 18', 'Rom 16', 'Lam 3', 'Ps 34'],
+['1 Sam 19', '1 Cor 1', 'Lam 4', 'Ps 35'],
+['1 Sam 20', '1 Cor 2', 'Lam 5', 'Ps 36'],
+['1 Sam 21-22', '1 Cor 3', 'Eze 1', 'Ps 37'],
+['1 Sam 23', '1 Cor 4', 'Eze 2', 'Ps 38'],
+['1 Sam 24', '1 Cor 5', 'Eze 3', 'Ps 39'],
+['1 Sam 25', '1 Cor 6', 'Eze 4', 'Ps 40-41'],
+['1 Sam 26', '1 Cor 7', 'Eze 5', 'Ps 42-43'],
+['1 Sam 27', '1 Cor 8', 'Eze 6', 'Ps 44'],
+['1 Sam 28', '1 Cor 9', 'Eze 7', 'Ps 45'],
+['1 Sam 29-30', '1 Cor 10', 'Eze 8', 'Ps 46-47'],
+['1 Sam 31', '1 Cor 11', 'Eze 9', 'Ps 48'],
+['2 Sam 1', '1 Cor 12', 'Eze 10', 'Ps 49'],
+['2 Sam 2', '1 Cor 13', 'Eze 11', 'Ps 50'],
+['2 Sam 3', '1 Cor 14', 'Eze 12', 'Ps 51'],
+['2 Sam 4-5', '1 Cor 15', 'Eze 13', 'Ps 52-54'],
+['2 Sam 6', '1 Cor 16', 'Eze 14', 'Ps 55'],
+['2 Sam 7', '2 Cor 1', 'Eze 15', 'Ps 56-57'],
+['2 Sam 8-9', '2 Cor 2', 'Eze 16', 'Ps 58-59'],
+['2 Sam 10', '2 Cor 3', 'Eze 17', 'Ps 60-61'],
+['2 Sam 11', '2 Cor 4', 'Eze 18', 'Ps 62-63'],
+['2 Sam 12', '2 Cor 5', 'Eze 19', 'Ps 64-65'],
+['2 Sam 13', '2 Cor 6', 'Eze 20', 'Ps 66-67'],
+['2 Sam 14', '2 Cor 7', 'Eze 21', 'Ps 68'],
+['2 Sam 15', '2 Cor 8', 'Eze 22', 'Ps 69'],
+['2 Sam 16', '2 Cor 9', 'Eze 23', 'Ps 70-71'],
+['2 Sam 17', '2 Cor 10', 'Eze 24', 'Ps 72'],
+['2 Sam 18', '2 Cor 11', 'Eze 25', 'Ps 73'],
+['2 Sam 19', '2 Cor 12', 'Eze 26', 'Ps 74'],
+['2 Sam 20', '2 Cor 13', 'Eze 27', 'Ps 75-76'],
+['2 Sam 21', 'Gal 1', 'Eze 28', 'Ps 77'],
+['2 Sam 22', 'Gal 2', 'Eze 29', 'Ps 78:1-37'],
+['2 Sam 23', 'Gal 3', 'Eze 30', 'Ps 78:38ff'],
+['2 Sam 24', 'Gal 4', 'Eze 31', 'Ps 79'],
+['1 Kings 1', 'Gal 5', 'Eze 32', 'Ps 80'],
+['1 Kings 2', 'Gal 6', 'Eze 33', 'Ps 81-82'],
+['1 Kings 3', 'Eph 1', 'Eze 34', 'Ps 83-84'],
+['1 Kings 4-5', 'Eph 2', 'Eze 35', 'Ps 85'],
+['1 Kings 6', 'Eph 3', 'Eze 36', 'Ps 86'],
+['1 Kings 7', 'Eph 4', 'Eze 37', 'Ps 87-88'],
+['1 Kings 8', 'Eph 5', 'Eze 38', 'Ps 89'],
+['1 Kings 9', 'Eph 6', 'Eze 39', 'Ps 90'],
+['1 Kings 10', 'Phil 1', 'Eze 40', 'Ps 91'],
+['1 Kings 11', 'Phil 2', 'Eze 41', 'Ps 92-93'],
+['1 Kings 12', 'Phil 3', 'Eze 42', 'Ps 94'],
+['1 Kings 13', 'Phil 4', 'Eze 43', 'Ps 95-96'],
+['1 Kings 14', 'Col 1', 'Eze 44', 'Ps 97-98'],
+['1 Kings 15', 'Col 2', 'Eze 45', 'Ps 99-101'],
+['1 Kings 16', 'Col 3', 'Eze 46', 'Ps 102'],
+['1 Kings 17', 'Col 4', 'Eze 47', 'Ps 103'],
+['1 Kings 18', '1 Thess 1', 'Eze 48', 'Ps 104'],
+['1 Kings 19', '1 Thess 2', 'Dan 1', 'Ps 105'],
+['1 Kings 20', '1 Thess 3', 'Dan 2', 'Ps 106'],
+['1 Kings 21', '1 Thess 4', 'Dan 3', 'Ps 107'],
+['1 Kings 22', '1 Thess 5', 'Dan 4', 'Ps 108-109'],
+['2 Kings 1', '2 Thess 1', 'Dan 5', 'Ps 110-111'],
+['2 Kings 2', '2 Thess 2', 'Dan 6', 'Ps 112-113'],
+['2 Kings 3', '2 Thess 3', 'Dan 7', 'Ps 114-115'],
+['2 Kings 4', '1 Tim 1', 'Dan 8', 'Ps 116'],
+['2 Kings 5', '1 Tim 2', 'Dan 9', 'Ps 117-118'],
+['2 Kings 6', '1 Tim 3', 'Dan 10', 'Ps 119:1-24'],
+['2 Kings 7', '1 Tim 4', 'Dan 11', 'Ps 119:25-48'],
+['2 Kings 8', '1 Tim 5', 'Dan 12', 'Ps 119:49-72'],
+['2 Kings 9', '1 Tim 6', 'Hos 1', 'Ps 119:73-96'],
+['2 Kings 10', '2 Tim 1', 'Hos 2', 'Ps 119:97-120'],
+['2 Kings 11-12', '2 Tim 2', 'Hos 3-4', 'Ps 119:121-144'],
+['2 Kings 13', '2 Tim 3', 'Hos 5-6', 'Ps 119:145-176'],
+['2 Kings 14', '2 Tim 4', 'Hos 7', 'Ps 120-122'],
+['2 Kings 15', 'Titus 1', 'Hos 8', 'Ps 123-125'],
+['2 Kings 16', 'Titus 2', 'Hos 9', 'Ps 126-128'],
+['2 Kings 17', 'Titus 3', 'Hos 10', 'Ps 129-131'],
+['2 Kings 18', 'Phm 1', 'Hos 11', 'Ps 132-134'],
+['2 Kings 19', 'Heb 1', 'Hos 12', 'Ps 135-136'],
+['2 Kings 20', 'Heb 2', 'Hos 13', 'Ps 137-138'],
+['2 Kings 21', 'Heb 3', 'Hos 14', 'Ps 139'],
+['2 Kings 22', 'Heb 4', 'Joel 1', 'Ps 140-141'],
+['2 Kings 23', 'Heb 5', 'Joel 2', 'Ps 142'],
+['2 Kings 24', 'Heb 6', 'Joel 3', 'Ps 143'],
+['2 Kings 25', 'Heb 7', 'Amos 1', 'Ps 144'],
+['1 Chron 1-2', 'Heb 8', 'Amos 2', 'Ps 145'],
+['1 Chron 3-4', 'Heb 9', 'Amos 3', 'Ps 146-147'],
+['1 Chron 5-6', 'Heb 10', 'Amos 4', 'Ps 148-150'],
+['1 Chron 7-8', 'Heb 11', 'Amos 5', 'Lk 1:1-38'],
+['1 Chron 9-10', 'Heb 12', 'Amos 6', 'Lk 1:39ff'],
+['1 Chron 11-12', 'Heb 13', 'Amos 7', 'Lk 2'],
+['1 Chron 13-14', 'James 1', 'Amos 8', 'Lk 3'],
+['1 Chron 15', 'James 2', 'Amos 9', 'Lk 4'],
+['1 Chron 16', 'James 3', 'Obad 1', 'Lk 5'],
+['1 Chron 17', 'James 4', 'Jon 1', 'Lk 6'],
+['1 Chron 18', 'James 5', 'Jon 2', 'Lk 7'],
+['1 Chron 19-20', '1 Pet 1', 'Jon 3', 'Lk 8'],
+['1 Chron 21', '1 Pet 2', 'Jon 4', 'Lk 9'],
+['1 Chron 22', '1 Pet 3', 'Mic 1', 'Lk 10'],
+['1 Chron 23', '1 Pet 4', 'Mic 2', 'Lk 11'],
+['1 Chron 24-25', '1 Pet 5', 'Mic 3', 'Lk 12'],
+['1 Chron 26-27', '2 Pet 1', 'Mic 4', 'Lk 13'],
+['1 Chron 28', '2 Pet 2', 'Mic 5', 'Lk 14'],
+['1 Chron 29', '2 Pet 3', 'Mic 6', 'Lk 15'],
+['2 Chron 1', '1 Jn 1', 'Mic 7', 'Lk 16'],
+['2 Chron 2', '1 Jn 2', 'Nah 1', 'Lk 17'],
+['2 Chron 3-4', '1 Jn 3', 'Nah 2', 'Lk 18'],
+['2 Chron 5-6:11', '1 Jn 4', 'Nah 3', 'Lk 19'],
+['2 Chron 6:12ff', '1 Jn 5', 'Hab 1', 'Lk 20'],
+['2 Chron 7', '2 Jn 1', 'Hab 2', 'Lk 21'],
+['2 Chron 8', '3 Jn 1', 'Hab 3', 'Lk 22'],
+['2 Chron 9', 'Jude 1', 'Zeph 1', 'Lk 23'],
+['2 Chron 10', 'Rev 1', 'Zeph 2', 'Lk 24'],
+['2 Chron 11-12', 'Rev 2', 'Zeph 3', 'Jn 1'],
+['2 Chron 13', 'Rev 3', 'Hag 1', 'Jn 2'],
+['2 Chron 14-15', 'Rev 4', 'Hag 2', 'Jn 3'],
+['2 Chron 16', 'Rev 5', 'Zech 1', 'Jn 4'],
+['2 Chron 17', 'Rev 6', 'Zech 2', 'Jn 5'],
+['2 Chron 18', 'Rev 7', 'Zech 3', 'Jn 6'],
+['2 Chron 19-20', 'Rev 8', 'Zech 4', 'Jn 7'],
+['2 Chron 21', 'Rev 9', 'Zech 5', 'Jn 8'],
+['2 Chron 22-23', 'Rev 10', 'Zech 6', 'Jn 9'],
+['2 Chron 24', 'Rev 11', 'Zech 7', 'Jn 10'],
+['2 Chron 25', 'Rev 12', 'Zech 8', 'Jn 11'],
+['2 Chron 26', 'Rev 13', 'Zech 9', 'Jn 12'],
+['2 Chron 27-28', 'Rev 14', 'Zech 10', 'Jn 13'],
+['2 Chron 29', 'Rev 15', 'Zech 11', 'Jn 14'],
+['2 Chron 30', 'Rev 16', 'Zech 12-13:1', 'Jn 15'],
+['2 Chron 31', 'Rev 17', 'Zech 13:2ff', 'Jn 16'],
+['2 Chron 32', 'Rev 18', 'Zech 14', 'Jn 17'],
+['2 Chron 33', 'Rev 19', 'Mal 1', 'Jn 18'],
+['2 Chron 34', 'Rev 20', 'Mal 2', 'Jn 19'],
+['2 Chron 35', 'Rev 21', 'Mal 3', 'Jn 20'],
+['2 Chron 36', 'Rev 22', 'Mal 4', 'Jn 21'],
+];
+
+var months = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember']
+
+$(function() {
+	$('.datepicker').datepicker({
+	    dateFormat: 'dd.mm.yy',
+	    defaultDate: Date(),
+	})
+	$('#datepicker').val($.datepicker.formatDate('dd.mm.yy', new Date()));
+	populate();
+});
+
+/* adds a day to a given column
+ * e.g. addLine(1, 'Mt 1', 'Hos 3')
+ * or you just add a title of a month:
+ * e.g. addLine('January')
+ * 
+ * arguments: 
+ * col: column number (starting from 1, max: 6)
+ */
+function addLine() {
+	var args = Array.prototype.slice.call(arguments);
+	var col = args.shift();
+	if (args.length == 1) {
+		var l = '<th colspan="5">' + args[0] + '</td>';
+	} else {
+		var args2 = [];
+		$.each(args, function(i, ref) {
+			$.each(book_translate, function(search, replace) {
+				ref = ref.replace(search + ' ', replace + ' ')
+			});
+			ref = ref.replace('1 ', '1. ').replace('2 ', '2. ').replace('3 ', '3. ');
+			args2.push(ref);
+		});
+		var l = '<td>' + args2.join('</td><td>') + '</td>';
+	}
+	console.log('#col' + col);
+	$('#col' + col).append('<tr>' + l + '</tr>');
+}
+
+function populate() {
+	for (i=1;i<=6;i++) {
+		$('#col' + i).empty();
+	}
+	var col = 1;
+	var row = 1;
+	var runner = $.datepicker.parseDate("dd.mm.yy", $('#datepicker').val());
+	addLine(col, months[runner.getMonth()]);
+	// if less then half a month left: put 3 first months into first column
+	if (runner.getDate() > 15) {
+		row = 0;
+	}
+	$.each(data, function(k, v){
+		var day = $.datepicker.formatDate('dd', runner);
+		addLine.apply(this, $.merge([col, day], v));
+		runner.setDate(runner.getDate() + 1);
+		if (runner.getDate() == 1) {
+			row += 1;
+			if (row == 3 && col < 6) {
+				col += 1;
+				row = 1;
+			}
+			if (row > 1) {
+				addLine(col, '');
+			}
+			addLine(col, months[runner.getMonth()]);
+		}
+	});
+}
+</script>
+
+
+<style type="text/css">
+
+@media print
+{
+    @page
+    {
+        margin:5px;
+    }
+}
+
+@media print{@page {size: landscape}}
+
+@media print{
+	.noprint, .noprint * {
+        display: none !important;
+    }
+	html, body {
+	  	/*changing width to 100% causes huge overflow and wrap*/
+	  	height:100%; 
+	  	background: #FFF; 
+	  	margin: 0;
+	}
+
+	h1 {
+		font-size: 14px;
+	}
+
+	#plan table td {
+		font-size: 6px !important;
+	}
+
+	#plan table th {
+		font-size: 8px !important;
+	}
+}
+
+table#plan td.column {
+	border-right: solid 1px #888;
+	border-left: solid 1px #888;
+	border-collapse: collapse;
+}
+
+body {
+	font-family: Georgia, serif;
+	margin-left: 0.5em;
+}
+h1 {
+	margin: 0;
+}
+input.datepicker {
+	width: 7em;
+}
+#plan table td {
+	font-size: 8px;
+	padding: 0;
+	margin: 0;
+}
+#plan table th {
+	padding: 0;
+	margin: 0;
+	border: none;
+	padding-top: 0.2em;
+}
+
+table#plan>tbody>tr>td {
+	border: none;
+}
+
+table tr td {
+	border-collapse: collapse;
+	margin: 0;
+	padding: 0;
+	line-height: 0.7em;
+}
+#plan td tr td:first-child {
+	color: #333;
+	font-weight: bold;
+}
+
+#plan td tr td {
+	padding-left: 0.5em;
+	/* white-space: nowrap; */
+}
+
+</style>
+</head>
+
+<body>
+<h1>M'Cheyne Bibelleseplan</h1>
+<div class="noprint">
+	<p>
+		Der <a href="http://www.bibleplan.org/mcheyne.htm">M'Cheyne Bibelleseplan</a> ist einer der populärsten Bibelleseplänen.<br />
+		Innerhalb eines Jahres liest Du das AT einmal und NT+Psalmen zweimal.
+	</p>
+
+	<p>
+		Wähle das Startdatum aus (wann soll der Plan anfangen?), dann drucke die Seite aus (im Landscape Format). Der Plan sollte auf einer A4-Seite Platz haben.
+	</p>
+	<p>
+	 	Feedback (Probleme beim Ausdruck, etc.) <a href="/2015/03/29/MCheyne-Bibelleseplan-mit-beliebigen-Anfangsdatum/">hier</a>
+	</p>
+	<p>
+		<label for="datepicker">Startdatum
+		<input class="datepicker" id="datepicker" onchange="populate()"></label>
+	</p>
+</div>
+<table id="plan">
+	<tr>
+		<td class="column"><table id="col1"></table></td>
+		<td class="column"><table id="col2"></table></td>
+		<td class="column"><table id="col3"></table></td>
+		<td class="column"><table id="col4"></table></td>
+		<td class="column"><table id="col5"></table></td>
+		<td class="column"><table id="col6"></table></td>
+	</tr>
+</table>
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-53694-9']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+</body>
+</html>
